@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 SERVER_PATH=$(dirname "$(pwd)")
 RUST_SERVER_PATH="$SERVER_PATH/Rust"
@@ -57,6 +57,12 @@ do
         exit 1
     fi
 done
+
+# Check if plugins/configs folder exists, if not create it
+
+if [ ! -d "$PLUGINS_PATH/configs" ]; then
+    mkdir -p "$PLUGINS_PATH/configs"
+fi
 
 # Remove the config files
 

@@ -1,5 +1,7 @@
 #! /bin/sh
 
+clear
+
 cd scripts
 
 ./update.sh

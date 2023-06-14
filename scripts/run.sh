@@ -1,9 +1,9 @@
-#! /bin/sh
-cd Rust
-clear while : do
+#! /bin/bash
+
+runGame() {
   exec ./RustDedicated -batchmode -nographics \
   -server.gamemode vanilla \
-  -server.tags weekly,vanilla,NA \
+  -server.tags battlefield,SA \
   -server.port 28015 \
   -server.queryport 28016 \
   -server.level "Procedural Map" \
@@ -18,5 +18,12 @@ clear while : do
   -rcon.port 28016 \
   -rcon.password "*XboxDurango2013" \
   -rcon.web 1 \
-  -app.port 17151\
-  echo "\nRestarting server...\n" done
+  -app.port 17151 \
+}    
+
+while true; do
+    runGame
+    echo "Rust server closed unexpectedly, restarting in 10 seconds..."
+    sleep 10
+done
+

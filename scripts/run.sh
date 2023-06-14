@@ -95,6 +95,8 @@ else
   exit 1
 fi
 
+cd $RUST_SERVER_PATH
+
 while true; do
   clear
   runGame

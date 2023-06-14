@@ -70,11 +70,11 @@ rm -rf "$OXIDE_PATH/config"/*
 
 # Copy the config files to the oxide config folder
 
-cp -r "$PLUGINS_PATH/configs/"* "$OXIDE_PATH/config"
+cp -r "$PLUGINS_PATH/configs"/* "$OXIDE_PATH/config"
 
 # if SERVER_MODE is set to dev, copy config files from oxide/config to plugins/configs folder
 # do not overwrite existing files
 
 if [ $SERVER_MODE == "dev" ]; then
-    cp -rn "$OXIDE_PATH/config/"* "$PLUGINS_PATH/configs"
+    cp -rn "$OXIDE_PATH/config"/* "$PLUGINS_PATH/configs"
 fi

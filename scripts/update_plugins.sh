@@ -41,13 +41,13 @@ fi
 
 # Remove all plugins from oxide folder
 
-rm -rf "$OXIDE_PATH/plugins/*"
+rm -rf "$OXIDE_PATH/plugins"/*
 
 # Use wget to download plugins from the oxide website, show progress and replace if exists
 
 for i in "${PLUGINS[@]}"
 do
-    wget --show-progress -N "$i" -P "$OXIDE_PATH/plugins"
+    wget -nv --show-progress -N "$i" -P "$OXIDE_PATH/plugins"
 
     # if wget fails, exit with error code
 
@@ -66,15 +66,15 @@ fi
 
 # Remove the config files
 
-rm -rf "$OXIDE_PATH/config/*"
+rm -rf "$OXIDE_PATH/config"/*
 
 # Copy the config files to the oxide config folder
 
-cp -r "$PLUGINS_PATH/configs/*" "$OXIDE_PATH/config"
+cp -r "$PLUGINS_PATH/configs/"* "$OXIDE_PATH/config"
 
 # if SERVER_MODE is set to dev, copy config files from oxide/config to plugins/configs folder
 # do not overwrite existing files
 
 if [ $SERVER_MODE == "dev" ]; then
-    cp -rn "$OXIDE_PATH/config/*" "$PLUGINS_PATH/configs"
+    cp -rn "$OXIDE_PATH/config/"* "$PLUGINS_PATH/configs"
 fi

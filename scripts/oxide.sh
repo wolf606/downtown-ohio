@@ -11,7 +11,7 @@ RUST_SERVER_PATH="$(dirname "$(pwd)")/Rust"
 # Download the latest version of oxide and unzip it to the Rust server
 # Use wget and if theres an error print the error, else go quiet
 
-wget --show-progress https://umod.org/games/rust/download/develop -O /tmp/oxide.zip
+wget -nv --show-progress https://umod.org/games/rust/download/develop -O /tmp/oxide.zip
 
 # If command fails, exit with error code
 

@@ -45,7 +45,7 @@ runGame() {
   -rcon.port $RCON_PORT \
   -rcon.password $RCON_PASSWORD \
   -rcon.web 1 \
-  -app.port $APP_PORT \
+  -app.port $APP_PORT
 }
 
 SERVER_PATH=$(dirname "$(pwd)")

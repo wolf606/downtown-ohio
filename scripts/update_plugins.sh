@@ -58,26 +58,13 @@ do
     fi
 done
 
-# Check if plugins/configs folder exists, if not create it
-
-if [ ! -d "$PLUGINS_PATH/configs" ]; then
-    mkdir -p "$PLUGINS_PATH/configs"
-fi
-
 # Remove the config files
 
 rm -rf "$OXIDE_PATH/config"/*
 
 # Copy the config files to the oxide config folder
+# if "$PLUGINS_PATH/configs" is not empty
 
-echo $PLUGINS_PATH/configs
-echo $OXIDE_PATH/config
-
-cp -r "$PLUGINS_PATH/configs"/* "$OXIDE_PATH/config"
-
-# if SERVER_MODE is set to dev, copy config files from oxide/config to plugins/configs folder
-# do not overwrite existing files
-
-if [ $SERVER_MODE == "dev" ]; then
-    cp -rn "$OXIDE_PATH/config"/* "$PLUGINS_PATH/configs"
+if [ "$(ls -A $PLUGINS_PATH/configs)" ]; then
+    cp -r "$PLUGINS_PATH/configs"/* "$OXIDE_PATH/config"
 fi

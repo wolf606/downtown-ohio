@@ -8,4 +8,21 @@ if [ ! -d "$RUST_SERVER_PATH" ]; then
 fi
 
 steamcmd +force_install_dir $RUST_SERVER_PATH +login anonymous +app_update 258550 +quit
+
+# if steamcmd fails, exit with error code
+
+if [ $? -ne 0 ]; then
+    # Print error message in red
+    echo -e "\e[31mFailed to update Rust server\e[0m"
+    exit 1
+fi
+
 ./oxide.sh
+
+# if oxide.sh fails, exit with error code
+
+if [ $? -ne 0 ]; then
+    # Print error message in red
+    echo -e "\e[31mFailed to update oxide\e[0m"
+    exit 1
+fi

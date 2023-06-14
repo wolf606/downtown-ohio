@@ -25,6 +25,22 @@ fi
 
 unzip -o /tmp/oxide.zip -d $RUST_SERVER_PATH
 
+# If command fails, exit with error code
+
+if [ $? -ne 0 ]; then
+    # Print error message in red
+    echo -e "\e[31mFailed to unzip oxide\e[0m"
+    exit 1
+fi
+
 # Remove the downloaded zip file
 
 rm /tmp/oxide.zip
+
+# If command fails, exit with error code
+
+if [ $? -ne 0 ]; then
+    # Print error message in red
+    echo -e "\e[31mFailed to remove oxide zip\e[0m"
+    exit 1
+fi

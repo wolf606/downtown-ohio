@@ -6,7 +6,7 @@
 
 # The path to your Rust server
 # Get the current path, get out of the folder plus the Rust folder
-RUST_SERVER_PATH=$(dirname "$(pwd)") && rust_folder_path="$folder_path/Rust"
+RUST_SERVER_PATH="$(dirname "$(pwd)")/Rust"
 
 # Download the latest version of oxide and unzip it to the Rust server
 # Use wget

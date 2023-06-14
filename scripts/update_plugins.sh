@@ -23,7 +23,7 @@ fi
 
 # Read plugins.txt file and create an array
 
-LIST=readarray -t PLUGINS < "$PLUGINS_PATH/plugins.txt"
+readarray -t PLUGINS < "$PLUGINS_PATH/plugins.txt"
 
 # Check if path exists, if not exit and print text in red
 

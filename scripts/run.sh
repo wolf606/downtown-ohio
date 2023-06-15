@@ -97,12 +97,11 @@ fi
 
 cd $RUST_SERVER_PATH
 
-# While $SERVER_MODE is set to prod, run the game
-while [ $SERVER_MODE == "prod" ]; do
+# While true, run the game
+while true; do
   clear
   runGame
-  # If [ ! -f "$SERVER_PATH/deploying" ]; then
-  if [ ! -f "$SERVER_PATH/deploying" ]; then
+  if [ ! -f "$SERVER_PATH/deploying" ] || [ $SERVER_MODE == "dev" ]; then
     break
   fi
   echo "Rust server closed unexpectedly, restarting in 10 seconds..."

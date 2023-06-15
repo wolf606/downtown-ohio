@@ -56,6 +56,12 @@ if [ $SERVER_MODE == "dev" ] || [ ! -d "$SERVER_PATH/Rust/oxide" ]; then
             rm "$SERVER_PATH/deploying"
             exit 1
         fi
+
+        # check if plugins/data folder exists, if not create it
+
+        if [ ! -d "$SERVER_PATH/plugins/data" ]; then
+            mkdir -p "$SERVER_PATH/plugins/data"
+        fi
     fi
 
     # check if plugins/configs folder exists, if not create it
@@ -72,18 +78,6 @@ if [ $SERVER_MODE == "dev" ] || [ ! -d "$SERVER_PATH/Rust/oxide" ]; then
         # Print error message in red
         echo -e "\e[31mFailed to update plugins\e[0m"
         exit 1
-    fi
-
-    # check if plugins/data folder exists, if not create it
-
-    if [ ! -d "$SERVER_PATH/plugins/data" ]; then
-        mkdir -p "$SERVER_PATH/plugins/data"
-    fi
-
-    # If plugins/data folder is not empty, copy files to oxide/data folder
-
-    if [ "$(ls -A $SERVER_PATH/plugins/data)" ]; then
-        cp -rn "$SERVER_PATH/plugins/data"/* "$OXIDE_PATH/data"
     fi
 fi
 
@@ -108,14 +102,12 @@ fi
 # if SERVER_MODE is set to dev, copy the oxide/config files to plugins/configs folder
 # check if oxide/config is not empty, if not copy files to plugins/configs folder
 
-if [ $SERVER_MODE == "dev" ]; then
-    if [ "$(ls -A $OXIDE_PATH/config)" ]; then
-        cp -rn "$OXIDE_PATH/config"/* "$SERVER_PATH/plugins/configs"
-    fi
+if [ "$(ls -A $OXIDE_PATH/config)" ]; then
+    cp -rn "$OXIDE_PATH/config"/* "$SERVER_PATH/plugins/configs"
+fi
 
-    # Check if oxide/data is not empty, if not copy files to plugins/data folder
+# Check if oxide/data is not empty, if not copy files to plugins/data folder
 
-    if [ "$(ls -A $OXIDE_PATH/data)" ]; then
-        cp -rn "$OXIDE_PATH/data"/* "$SERVER_PATH/plugins/data"
-    fi
+if [ "$(ls -A $OXIDE_PATH/data)" ]; then
+    cp -r "$OXIDE_PATH/data"/* "$SERVER_PATH/plugins/data"
 fi

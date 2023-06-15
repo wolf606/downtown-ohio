@@ -97,8 +97,8 @@ fi
 
 cd $RUST_SERVER_PATH
 
-# While true and $SERVER_MODE is not set to dev
-while true && [ $SERVER_MODE != "dev" ]; do
+# While $SERVER_MODE is set to prod and $SERVER_PATH/deployig does not exist
+while [ $SERVER_MODE == "prod" ] && [ ! -f "$SERVER_PATH/deploying" ]; do
   clear
   runGame
   echo "Rust server closed unexpectedly, restarting in 10 seconds..."

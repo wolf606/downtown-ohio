@@ -33,7 +33,21 @@ if [ $SERVER_MODE == "dev" ] || [ ! -d "$SERVER_PATH/Rust/oxide" ]; then
     # Run run.sh server to create oxide folder if Rust/oxide does not exists
 
     if [ ! -d "$SERVER_PATH/Rust/oxide" ]; then
+        touch "$SERVER_PATH/deploying"
         ./run.sh
+
+        # if run.sh fails, exit with error code
+
+        if [ $? -ne 0 ]; then
+            # Print error message in red
+            echo -e "\e[31m DEPLOYMENT FAILURE: Rust server exited with an error\e[0m"
+            # if Rust/oxide exists, remove it
+            if [ -d "$SERVER_PATH/Rust/oxide" ]; then
+                rm -rf "$SERVER_PATH/Rust/oxide"
+            fi
+            rm "$SERVER_PATH/deploying"
+            exit 1
+        fi
     fi
 
     # check if plugins/configs folder exists, if not create it
@@ -52,6 +66,14 @@ if [ $SERVER_MODE == "dev" ] || [ ! -d "$SERVER_PATH/Rust/oxide" ]; then
         exit 1
     fi
 fi
+
+# If deploying file exists, remove it
+
+if [ -f "$SERVER_PATH/deploying" ]; then
+    rm "$SERVER_PATH/deploying"
+fi
+
+# Run run.sh server
 
 ./run.sh
 

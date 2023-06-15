@@ -44,17 +44,18 @@ if [ $SERVER_MODE == "dev" ] || [ ! -d "$SERVER_PATH/Rust/oxide" ]; then
             echo -e "\e[31m DEPLOYMENT FAILURE: Rust server exited with an error\e[0m"
             rm "$SERVER_PATH/deploying"
             exit 1
-        fi
 
-        # If Rust/Compiler.x86_x64 exists, then add 755 permissions to it, else exit with error code
+        else 
+            # If Rust/Compiler.x86_x64 exists, then add 755 permissions to it, else exit with error code
 
-        if [ -f "$SERVER_PATH/Rust/Compiler.x86_x64" ]; then
-            chmod 755 "$SERVER_PATH/Rust/Compiler.x86_x64"
-        else
-            # Print error message in red
-            echo -e "\e[31mRust/Compiler.x86_x64 not found\e[0m"
-            rm "$SERVER_PATH/deploying"
-            exit 1
+            if [ -f "$SERVER_PATH/Rust/Compiler.x86_x64" ]; then
+                chmod 755 "$SERVER_PATH/Rust/Compiler.x86_x64"
+            else
+                # Print error message in red
+                echo -e "\e[31mRust/Compiler.x86_x64 not found\e[0m"
+                rm "$SERVER_PATH/deploying"
+                exit 1
+            fi
         fi
     fi
 

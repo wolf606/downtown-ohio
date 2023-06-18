@@ -12,7 +12,7 @@ if [ ! -d "$RUST_SERVER_PATH" ]; then
     mkdir -p "$RUST_SERVER_PATH"
 fi
 
-steamcmd +force_install_dir $RUST_SERVER_PATH +login anonymous +app_update 258550 +quit
+/usr/games/steamcmd +force_install_dir $RUST_SERVER_PATH +login anonymous +app_update 258550 +quit
 
 # if steamcmd fails, exit with error code
 

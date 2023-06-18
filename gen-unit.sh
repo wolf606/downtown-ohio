@@ -4,6 +4,8 @@
 
 SERVER_PATH=$(pwd)
 
+USER_NAME="rusty"
+
 # Check if .env file exists, if exit and print text in red
 
 if [ ! -f "$SERVER_PATH/.env" ]; then
@@ -28,8 +30,6 @@ if [ -z "$RCON_PASSWORD" ]; then
   echo -e "\e[31mRCON_PASSWORD is not set\e[0m"
   exit 1
 fi
-
-USER_NAME=$USER
 
 [ "$UID" -eq 0 ] || exec sudo "$0" "$@"
 

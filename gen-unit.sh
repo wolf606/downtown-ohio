@@ -31,6 +31,16 @@ fi
 
 [ "$UID" -eq 0 ] || exec sudo "$0" "$@"
 
+if [ ! -d "/etc/systemd/system" ]; then
+  echo -e "\e[31mSystemd is not installed\e[0m"
+  exit 1
+fi
+
+if [ "$UID" -ne 0 ]; then
+  echo -e "\e[31mYou must be root to run this script\e[0m"
+  exit 1
+fi
+
 # Check if the server is running in production 'prod'
 # If yes create a unit file for the Rust server
 
@@ -60,8 +70,24 @@ RemainAfterExit=yes
 WantedBy=multi-user.target
 EOF
 
+  if [ ! -f "/etc/systemd/system/rust-server.service" ]; then
+    echo -e "\e[31mFailed to create unit file\e[0m"
+    exit 1
+  fi
+
   sudo systemctl daemon-reload
+
+  if [ $? -ne 0 ]; then
+    echo -e "\e[31mFailed to reload systemd daemon\e[0m"
+    exit 1
+  fi
+
   sudo systemctl enable rust-server.service
+
+  if [ $? -ne 0 ]; then
+      echo -e "\e[31mFailed to enable rust-server.service\e[0m"
+      exit 1
+  fi
 
 # Check if the server is running in development 'dev'
 # If yes exit and say it is not supported

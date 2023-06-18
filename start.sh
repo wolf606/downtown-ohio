@@ -78,6 +78,15 @@ if [ $SERVER_MODE == "dev" ] || [ ! -d "$SERVER_PATH/Rust/oxide" ]; then
 
         if [ $SERVER_MODE == "prod" ]; then
             ./gen-unit.sh
+
+            # if gen-unit.sh fails, exit with error code
+
+            if [ $? -ne 0 ]; then
+                # Print error message in red
+                echo -e "\e[31mFailed to generate systemd unit\e[0m"
+                rm "$SERVER_PATH/deploying"
+                exit 1
+            fi
         fi
     fi
 

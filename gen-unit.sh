@@ -29,10 +29,6 @@ if [ -z "$RCON_PASSWORD" ]; then
   exit 1
 fi
 
-# Prompt the user for their password and store it securely
-read -s -p "Enter your password: " password
-echo ""
-
 # Check if the server is running in production 'prod'
 # If yes create a unit file for the Rust server
 
@@ -40,7 +36,7 @@ START_LINE="tmux new-session -d -s rust '/bin/bash $SERVER_PATH/start.sh'"
 STOP_LINE="tmux send -t rust quit ENTER"
 
 if [ $SERVER_MODE == "prod" ]; then
-  echo "$password" | sudo -S cat > /etc/systemd/system/rust-server.service << EOF
+  sudo cat > /etc/systemd/system/rust-server.service << EOF
 [Unit]
 Description=Rust Server
 After=network-online.target
@@ -58,8 +54,8 @@ Restart=no
 WantedBy=multi-user.target
 EOF
 
-  echo "$password" | sudo -S systemctl daemon-reload
-  echo "$password" | sudo -S systemctl enable rust-server.service
+  sudo systemctl daemon-reload
+  sudo systemctl enable rust-server.service
 
 # Check if the server is running in development 'dev'
 # If yes exit and say it is not supported

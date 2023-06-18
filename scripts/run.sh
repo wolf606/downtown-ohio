@@ -22,11 +22,13 @@ runGame() {
     echo -e "\e[31mInvalid server mode\e[0m"
     exit 1
   fi
-  echo '\nStarting server PRESS CTRL-C to exit '
-  echo 'Server PORT: ' $PORT
-  echo 'Server QUERY_PORT: ' $QUERY_PORT
-  echo 'Server RCON_PORT: ' $RCON_PORT
-  echo 'Server APP_PORT: ' $APP_PORT
+  # End of line and print Starting server PRESS CTRL-C to exit with cyan color
+  echo -e "\e[36mStarting server PRESS CTRL-C to exit\e[0m"
+  # Print with distinctive colors the server ports
+  echo -e "\e[32mGame port: $PORT\e[0m"
+  echo -e "\e[32mQuery port: $QUERY_PORT\e[0m"
+  echo -e "\e[32mRCON port: $RCON_PORT\e[0m"
+  echo -e "\e[32mApp port: $APP_PORT\e[0m"
   
   exec ./RustDedicated -batchmode -nographics \
   -server.gamemode vanilla \
@@ -111,23 +113,8 @@ cd $RUST_SERVER_PATH
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:`dirname $0`/RustDedicated_Data/Plugins/x86_64
 export TERM=xterm;
 
-# While true, run the game
-N=0
-while true; do
-  # Generate log file name with datetime, and if its dev or prod
-  LOG_FILE_NAME="$SERVER_MODE-$(date '+%Y-%m-%d-%H-%M-%S').log"
-  # if N is greater than 0, clear the screen
-  if [ $N -gt 0 ]; then
-    clear
-  fi
-  runGame
-  if [ ! -f "$SERVER_PATH/deploying" ] || [ $SERVER_MODE == "dev" ]; then
-    echo "run.sh closed, exiting..."
-    break
-  fi
-  echo "Rust server closed unexpectedly, restarting in 10 seconds..."
-  sleep 10
-  N=$((N+1))
-done
+# Generate log file name with datetime, and if its dev or prod
+LOG_FILE_NAME="$SERVER_MODE-$(date '+%Y-%m-%d-%H-%M-%S').log"
+runGame
 
 echo -e "\e[32m--------------------------------------------------\e[0m"

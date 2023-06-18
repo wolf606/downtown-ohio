@@ -102,7 +102,22 @@ fi
 
 # Run run.sh server
 
-./run.sh
+# While true, run the game
+N=0
+while true; do
+  # if N is greater than 0, clear the screen
+  if [ $N -gt 0 ]; then
+    clear
+  fi
+  ./run.sh
+  if [ ! -f "$SERVER_PATH/deploying" ] || [ $SERVER_MODE == "dev" ]; then
+    echo "run.sh closed, exiting while TRUE..."
+    break
+  fi
+  echo "Rust server closed unexpectedly, restarting in 10 seconds..."
+  sleep 10
+  N=$((N+1))
+done
 
 # if run.sh fails, exit with error code
 

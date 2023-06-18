@@ -29,11 +29,13 @@ if [ -z "$RCON_PASSWORD" ]; then
   exit 1
 fi
 
+[ "$UID" -eq 0 ] || exec sudo "$0" "$@"
+
 # Check if the server is running in production 'prod'
 # If yes create a unit file for the Rust server
 
-START_LINE="tmux new-session -d -s rust '/bin/bash $SERVER_PATH/start.sh'"
-STOP_LINE="tmux send -t rust quit ENTER"
+START_LINE="/bin/bash $SERVER_PATH/bootstrapper.sh"
+STOP_LINE="/usr/bin/tmux kill-session -t rust"
 
 if [ $SERVER_MODE == "prod" ]; then
   sudo cat > /etc/systemd/system/rust-server.service << EOF
@@ -43,12 +45,11 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
+Type=forking
 User=$USER
 ExecStart=$START_LINE
 ExecStop=$STOP_LINE
 ExecReload=$STOP_LINE && $START_LINE
-KillMode=process
-Restart=no
 
 [Install]
 WantedBy=multi-user.target

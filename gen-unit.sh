@@ -37,7 +37,7 @@ fi
 START_LINE="/usr/bin/tmux new-session -d -s rust"
 POST_START_LINE="/usr/bin/tmux send-keys -t rust \"./start.sh\" ENTER"
 STOP_LINE="/usr/bin/tmux kill-session -t rust"
-RELOAD_LINE="/usr/bin/tmux send-keys -t rust-server C-c"
+RELOAD_LINE="/usr/bin/tmux send-keys -t rust C-c"
 
 if [ $SERVER_MODE == "prod" ]; then
   sudo cat > /etc/systemd/system/rust-server.service << EOF

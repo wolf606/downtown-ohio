@@ -110,7 +110,7 @@ while true; do
     clear
   fi
   ./run.sh
-  if [ ! -f "$SERVER_PATH/deploying" ] || [ $SERVER_MODE == "dev" ]; then
+  if [ $SERVER_MODE == "dev" ]; then
     echo "run.sh closed, exiting while TRUE..."
     break
   fi

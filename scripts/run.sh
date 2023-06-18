@@ -20,9 +20,9 @@ runGame() {
     echo "Running in production mode"
   else
     echo -e "\e[31mInvalid server mode\e[0m"
+    exit 1
   fi
-  echo ""
-  echo 'Starting server PRESS CTRL-C to exit'
+  echo '\nStarting server PRESS CTRL-C to exit '
   echo 'Server PORT: ' $PORT
   echo 'Server QUERY_PORT: ' $QUERY_PORT
   echo 'Server RCON_PORT: ' $RCON_PORT
@@ -53,16 +53,22 @@ SERVER_PATH=$(dirname "$(pwd)")
 RUST_SERVER_PATH="$(dirname "$(pwd)")/Rust"
 LOGS_PATH="$SERVER_PATH/logs"
 
+# Print with distinctive colors a separator that indicates the server is running
+echo -e "\e[32m--------------------------------------------------\e[0m"
+echo -e "\e[32mStarting Rust server...\e[0m"
+
 # Check if .env file exists, if exit and print text in red
 if [ ! -f "$SERVER_PATH/.env" ]; then
     echo -e "\e[31m.env file not found\e[0m"
     exit 1
+    echo -e "\e[32m--------------------------------------------------\e[0m"
 fi
 
 # Check if Rust server path exists, if not exit and print text in red
 if [ ! -d "$RUST_SERVER_PATH" ]; then
     echo -e "\e[31mRust server path not found\e[0m"
     exit 1
+    echo -e "\e[32m--------------------------------------------------\e[0m"
 fi
 
 # Read .env file
@@ -72,12 +78,14 @@ source "$SERVER_PATH/.env"
 if [ -z "$SERVER_MODE" ]; then
   echo -e "\e[31mSERVER_MODE is not set\e[0m"
   exit 1
+  echo -e "\e[32m--------------------------------------------------\e[0m"
 fi
 
 # Check if RCON_PASSWORD is set
 if [ -z "$RCON_PASSWORD" ]; then
   echo -e "\e[31mRCON_PASSWORD is not set\e[0m"
   exit 1
+  echo -e "\e[32m--------------------------------------------------\e[0m"
 fi
 
 # Check if the server is running in production or development
@@ -95,6 +103,7 @@ elif [ $SERVER_MODE == "prod" ]; then
 else
   echo -e "\e[31mInvalid server mode\e[0m"
   exit 1
+  echo -e "\e[32m--------------------------------------------------\e[0m"
 fi
 
 cd $RUST_SERVER_PATH
@@ -103,14 +112,22 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:`dirname $0`/RustDedicated_Data/Plugins/
 export TERM=xterm;
 
 # While true, run the game
+N=0
 while true; do
-  clear
   # Generate log file name with datetime, and if its dev or prod
   LOG_FILE_NAME="$SERVER_MODE-$(date '+%Y-%m-%d-%H-%M-%S').log"
+  # if N is greater than 0, clear the screen
+  if [ $N -gt 0 ]; then
+    clear
+  fi
   runGame
   if [ ! -f "$SERVER_PATH/deploying" ] || [ $SERVER_MODE == "dev" ]; then
+    echo "run.sh closed, exiting..."
     break
   fi
   echo "Rust server closed unexpectedly, restarting in 10 seconds..."
   sleep 10
+  N=$((N+1))
 done
+
+echo -e "\e[32m--------------------------------------------------\e[0m"

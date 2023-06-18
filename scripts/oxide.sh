@@ -8,6 +8,11 @@
 # Get the current path, get out of the folder plus the Rust folder
 RUST_SERVER_PATH="$(dirname "$(pwd)")/Rust"
 
+# Print with distinctive colors a separator that indicates the server is updating plugins
+
+echo -e "\e[32m--------------------------------------------------\e[0m"
+echo -e "\e[32mUpdating oxide...\e[0m"
+
 # Download the latest version of oxide and unzip it to the Rust server
 # Use wget and if theres an error print the error, else go quiet
 
@@ -19,6 +24,7 @@ if [ $? -ne 0 ]; then
     # Print error message in red
     echo -e "\e[31mFailed to download oxide\e[0m"
     exit 1
+    echo -e "\e[32m--------------------------------------------------\e[0m"
 fi
 
 # Unzip and overwrite existing files
@@ -31,6 +37,7 @@ if [ $? -ne 0 ]; then
     # Print error message in red
     echo -e "\e[31mFailed to unzip oxide\e[0m"
     exit 1
+    echo -e "\e[32m--------------------------------------------------\e[0m"
 fi
 
 # Remove the downloaded zip file
@@ -43,4 +50,7 @@ if [ $? -ne 0 ]; then
     # Print error message in red
     echo -e "\e[31mFailed to remove oxide zip\e[0m"
     exit 1
+    echo -e "\e[32m--------------------------------------------------\e[0m"
 fi
+
+echo -e "\e[32m--------------------------------------------------\e[0m"

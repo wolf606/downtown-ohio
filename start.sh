@@ -33,6 +33,10 @@ if [ $SERVER_MODE == "dev" ] || [ ! -d "$SERVER_PATH/Rust/oxide" ]; then
     # Run run.sh server to create oxide folder if Rust/oxide does not exists
 
     if [ ! -d "$SERVER_PATH/Rust/oxide" ]; then
+        # Print with distinctive colors a separator that indicates the deployment is starting
+        echo -e "\e[32m--------------------------------------------------\e[0m"
+        echo -e "\e[32mDeploying Rust server...\e[0m"
+
         touch "$SERVER_PATH/deploying"
 
         # create logs folder in $SERVER_PATH
@@ -85,6 +89,9 @@ if [ $SERVER_MODE == "dev" ] || [ ! -d "$SERVER_PATH/Rust/oxide" ]; then
         echo -e "\e[31mFailed to update plugins\e[0m"
         exit 1
     fi
+
+    echo -e "Deployment completed"
+    echo -e "\e[32m--------------------------------------------------\e[0m"
 fi
 
 # If deploying file exists, remove it

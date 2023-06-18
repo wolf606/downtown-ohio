@@ -77,6 +77,7 @@ if [ $SERVER_MODE == "dev" ] || [ ! -d "$SERVER_PATH/Rust/oxide" ]; then
         # If it is run gen-unit.sh
 
         if [ $SERVER_MODE == "prod" ]; then
+            cd ..
             ./gen-unit.sh
 
             # if gen-unit.sh fails, exit with error code
@@ -87,6 +88,7 @@ if [ $SERVER_MODE == "dev" ] || [ ! -d "$SERVER_PATH/Rust/oxide" ]; then
                 rm "$SERVER_PATH/deploying"
                 exit 1
             fi
+            cd scripts
         fi
     fi
 

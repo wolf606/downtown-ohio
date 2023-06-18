@@ -72,6 +72,13 @@ if [ $SERVER_MODE == "dev" ] || [ ! -d "$SERVER_PATH/Rust/oxide" ]; then
         if [ ! -d "$SERVER_PATH/plugins/data" ]; then
             mkdir -p "$SERVER_PATH/plugins/data"
         fi
+
+        # Check if SERVER_MODE is set to prod
+        # If it is run gen-unit.sh
+
+        if [ $SERVER_MODE == "prod" ]; then
+            ./gen-unit.sh
+        fi
     fi
 
     # check if plugins/configs folder exists, if not create it
@@ -114,8 +121,8 @@ while true; do
     echo "run.sh closed, exiting while TRUE..."
     break
   fi
-  echo "Rust server closed unexpectedly, restarting in 10 seconds..."
-  sleep 10
+  echo "Rust server closed unexpectedly, restarting in 30 seconds..."
+  sleep 30
   N=$((N+1))
 done
 

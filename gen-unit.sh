@@ -4,8 +4,6 @@
 
 SERVER_PATH=$(pwd)
 
-USER_NAME="rusty"
-
 # Check if .env file exists, if exit and print text in red
 
 if [ ! -f "$SERVER_PATH/.env" ]; then
@@ -50,7 +48,7 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-User=$USER_NAME
+User="rusty"
 WorkingDirectory=$SERVER_PATH
 ExecStart=$START_LINE
 ExecStartPost=$POST_START_LINE

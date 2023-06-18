@@ -35,6 +35,12 @@ if [ $SERVER_MODE == "dev" ] || [ ! -d "$SERVER_PATH/Rust/oxide" ]; then
     if [ ! -d "$SERVER_PATH/Rust/oxide" ]; then
         touch "$SERVER_PATH/deploying"
 
+        # create logs folder in $SERVER_PATH
+
+        if [ ! -d "$SERVER_PATH/logs" ]; then
+            mkdir -p "$SERVER_PATH/logs"
+        fi
+
         ./run.sh
 
         # if run.sh fails, exit with error code

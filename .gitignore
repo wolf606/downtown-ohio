@@ -81,4 +81,6 @@ Rust/
 # Development file
 .env
 
+logs/
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,linux,windows

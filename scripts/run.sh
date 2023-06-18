@@ -45,11 +45,13 @@ runGame() {
   -rcon.port $RCON_PORT \
   -rcon.password $RCON_PASSWORD \
   -rcon.web 1 \
-  -app.port $APP_PORT
+  -app.port $APP_PORT \
+  -logfile $LOGS_PATH/$LOG_FILE_NAME 2>&1
 }
 
 SERVER_PATH=$(dirname "$(pwd)")
 RUST_SERVER_PATH="$(dirname "$(pwd)")/Rust"
+LOGS_PATH="$SERVER_PATH/logs"
 
 # Check if .env file exists, if exit and print text in red
 if [ ! -f "$SERVER_PATH/.env" ]; then
@@ -97,9 +99,14 @@ fi
 
 cd $RUST_SERVER_PATH
 
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:`dirname $0`/RustDedicated_Data/Plugins/x86_64
+export TERM=xterm;
+
 # While true, run the game
 while true; do
   clear
+  # Generate log file name with datetime, and if its dev or prod
+  LOG_FILE_NAME="$SERVER_MODE-$(date '+%Y-%m-%d-%H-%M-%S').log"
   runGame
   if [ ! -f "$SERVER_PATH/deploying" ] || [ $SERVER_MODE == "dev" ]; then
     break

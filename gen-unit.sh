@@ -48,7 +48,7 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-User="rusty"
+User=rusty
 WorkingDirectory=$SERVER_PATH
 ExecStart=$START_LINE
 ExecStartPost=$POST_START_LINE

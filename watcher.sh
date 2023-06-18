@@ -25,9 +25,15 @@ LOG_FILE_NAME=$(ls -t "$LOGS_PATH" | head -n1)
 read -p "How many lines to show? (default 10): " LINES
 
 # Check that the input is indeed a number, or ask again
+# if the input is empty, default to 10
 
 while ! [[ "$LINES" =~ ^[0-9]+$ ]]; do
-    read -p "Please enter a number: " LINES
+    if [ -z "$LINES" ]; then
+        LINES=10
+        break
+    fi
+    echo "Please enter a number"
+    read -p "How many lines to show? (default 10): " LINES
 done
 
 # If the input is a number, show that many lines

@@ -1,2 +1,12 @@
 https://umod.org/plugins/aTimeAPI.cs
 https://umod.org/plugins/Airstrike.cs
+https://umod.org/plugins/Clans.cs
+https://umod.org/plugins/AmmoHUD.cs
+https://umod.org/plugins/AdminLogger.cs
+https://umod.org/plugins/NTeleportation.cs
+https://umod.org/plugins/RemoverTool.cs
+https://umod.org/plugins/InstantCraft.cs
+https://umod.org/plugins/DeathNotes.cs
+https://umod.org/plugins/BetterChat.cs
+https://umod.org/plugins/BGrade.cs
+https://umod.org/plugins/AutoDoors.cs
